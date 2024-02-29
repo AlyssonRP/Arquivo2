@@ -1,0 +1,24 @@
+void salvarEstoque(Produto estoque[], int numProdutos) {
+    FILE *file = fopen("estoque.txt", "w");
+    if (file) {
+        for (int i = 0; i < numProdutos; i++) {
+            fprintf(file, "%s %.2f %d\n", estoque[i].nome, estoque[i].preco, estoque[i].quantidade);
+        }
+        fclose(file);
+    } else {
+        printf("Erro ao abrir o arquivo de estoque.\n");
+    }
+}
+
+void carregarEstoque(Produto estoque[], int *numProdutos) {
+    FILE *file = fopen("estoque.txt", "r");
+    if (file) {
+        *numProdutos = 0;  // Inicializa o número de produtos a zero
+        while (fscanf(file, "%s %f %d", estoque[*numProdutos].nome, &estoque[*numProdutos].preco, &estoque[*numProdutos].quantidade) == 3) {
+            (*numProdutos)++;
+        }
+        fclose(file);
+    } else {
+        printf("Erro ao abrir o arquivo de estoque.\n");
+    }
+}

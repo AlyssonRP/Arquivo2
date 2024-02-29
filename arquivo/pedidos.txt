@@ -1,0 +1,24 @@
+void salvarPedidos(Pedido pedidos[], int numPedidos) {
+    FILE *file = fopen("pedidos.txt", "w");
+    if (file) {
+        for (int i = 0; i < numPedidos; i++) {
+            fprintf(file, "%s %d\n", pedidos[i].nome_produto, pedidos[i].quantidade);
+        }
+        fclose(file);
+    } else {
+        printf("Erro ao abrir o arquivo de pedidos.\n");
+    }
+}
+
+void carregarPedidos(Pedido pedidos[], int *numPedidos) {
+    FILE *file = fopen("pedidos.txt", "r");
+    if (file) {
+        *numPedidos = 0;  // Inicializa o número de pedidos a zero
+        while (fscanf(file, "%s %d", pedidos[*numPedidos].nome_produto, &pedidos[*numPedidos].quantidade) == 2) {
+            (*numPedidos)++;
+        }
+        fclose(file);
+    } else {
+        printf("Erro ao abrir o arquivo de pedidos.\n");
+    }
+}

@@ -1,0 +1,24 @@
+void salvarUsuarios(Usuario usuarios[], int numUsuarios) {
+    FILE *file = fopen("usuarios.txt", "w");
+    if (file) {
+        for (int i = 0; i < numUsuarios; i++) {
+            fprintf(file, "%s %s %d\n", usuarios[i].nome, usuarios[i].senha, usuarios[i].nivel_privilegio);
+        }
+        fclose(file);
+    } else {
+        printf("Erro ao abrir o arquivo de usuários.\n");
+    }
+}
+
+void carregarUsuarios(Usuario usuarios[], int *numUsuarios) {
+    FILE *file = fopen("usuarios.txt", "r");
+    if (file) {
+        *numUsuarios = 0;  // Inicializa o número de usuários a zero
+        while (fscanf(file, "%s %s %d", usuarios[*numUsuarios].nome, usuarios[*numUsuarios].senha, &usuarios[*numUsuarios].nivel_privilegio) == 3) {
+            (*numUsuarios)++;
+        }
+        fclose(file);
+    } else {
+        printf("Erro ao abrir o arquivo de usuários.\n");
+    }
+}
